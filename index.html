@@ -7,22 +7,18 @@
     <link rel="stylesheet" href="public/styles/style.css">
 </head>
 <body>
-    <!-- Mobiler Hamburger-Menü-Button -->
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-    <!-- Hotlist oben -->
     <header>
         <div id="hotlist">
             <h2>Hotlist</h2>
             <div id="top-list-wrapper">
                 <ul id="top-list">
-                    <!-- Dynamische Inhalte der Hotlist -->
                 </ul>
             </div>
         </div>
     </header>
 
-    <!-- Navigationsleiste -->
     <nav>
         <div class="nav-left">
             <a href="index.html">Home</a>
@@ -37,7 +33,6 @@
         </div>
     </nav>
 
-    <!-- Hauptinhalt der Homepage -->
     <main>
         <section id="top-memecoins">
             <h3>Memecoins</h3>
@@ -56,13 +51,13 @@
                         </tr>
                     </thead>
                     <tbody id="memecoins-list">
-                        <!-- Dynamische Inhalte werden hier eingefügt -->
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Login/Signup Modal -->
+        <div id="pagination"></div>
+
         <div id="modal-background" class="modal-background" onclick="closeModal()"></div>
         <div id="login-signup-modal" class="modal">
             <div class="tab-container">
@@ -108,7 +103,6 @@
         </div>
     </main>
 
-    <!-- Scripts -->
     <script src="public/scripts/main.js"></script>
     <script src="public/scripts/hotlist.js"></script>
     <script>
