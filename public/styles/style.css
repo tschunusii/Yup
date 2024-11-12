@@ -31,7 +31,7 @@ header, #hotlist {
 #top-list {
     display: inline-flex;
     gap: 20px;
-    animation: scroll-left 30s linear infinite;
+    animation: scroll 60s linear infinite; /* Anpassung der Geschwindigkeit */
 }
 
 .coin-item {
@@ -47,9 +47,16 @@ header, #hotlist {
 .coin-loss { color: #ff0000; margin-left: 5px; }
 
 /* Laufband-Animation */
-@keyframes scroll-left {
+@keyframes scroll {
     0% { transform: translateX(100%); }
     100% { transform: translateX(-100%); }
+}
+
+#top-list {
+    display: inline-flex;
+    gap: 20px;
+    animation: scroll 30s linear infinite; /* Dauer der Animation */
+}
 
 
 /* Navigationsleiste */
@@ -176,16 +183,12 @@ h2, h3 { color: #00c6ff; }
     cursor: pointer;
     margin-left: 5px;
 }
-
 .favorite-star:hover {
     color: gold;
 }
-
 .favorite-star.active {
     color: gold;
 }
-
-
 /* NFT-Galerie */
 #nft-gallery, .nft-card {
     padding: 20px;
