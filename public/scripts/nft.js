@@ -9,7 +9,7 @@ async function fetchNFTs() {
     try {
         const response = await fetch(apiUrl, {
             headers: {
-                'X-API-KEY': 'YOUR_OPENSEA_API_KEY' // API-Schlüssel hier einfügen
+                'X-API-KEY': '8982fb44fdfb4303a85526a1de38adf0' // API-Schlüssel hier einfügen
             }
         });
 
