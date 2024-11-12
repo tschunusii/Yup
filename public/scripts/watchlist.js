@@ -8,19 +8,23 @@ async function loadWatchlist() {
         return;
     }
 
-    for (let i = 0; i < favorites.length; i++) {
-        const coinId = favorites[i];
-        const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinId}`);
+    try {
+        // Anfrage an den Server, um alle Favoriten auf einmal abzurufen
+        const response = await fetch(`/api/coin/${favorites.join(',')}`);
         const data = await response.json();
-        const coin = data[0];
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${i + 1}</td>
-            <td>${coin.name} (${coin.symbol.toUpperCase()})</td>
-            <td>$${coin.current_price.toFixed(2)}</td>
-        `;
-        watchlistBody.appendChild(row);
+        data.forEach((coin, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${coin.name} (${coin.symbol.toUpperCase()})</td>
+                <td>$${coin.current_price.toFixed(2)}</td>
+            `;
+            watchlistBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Fehler beim Laden der Watchlist:', error);
+        watchlistBody.innerHTML = '<tr><td colspan="3">Fehler beim Laden der Watchlist.</td></tr>';
     }
 }
 
