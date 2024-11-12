@@ -47,7 +47,7 @@ function startWebSocket(symbol) {
 
     socket.onclose = () => {
         console.log("WebSocket-Verbindung geschlossen. Versuche erneut zu verbinden...");
-        setTimeout(() => startWebSocket(symbol), 1000); // Verbindung nach 1 Sekunde neu starten
+        setTimeout(() => startWebSocket(symbol), 1000);
     };
 }
 
@@ -55,7 +55,6 @@ function startWebSocket(symbol) {
 function updateTradeTable(trade) {
     const tradeTableBody = document.getElementById("trade-data");
 
-    // Neue Zeile für die Handelsdaten erstellen
     const price = trade.p < 0.01 ? parseFloat(trade.p).toFixed(10) : parseFloat(trade.p).toFixed(4);
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -65,10 +64,8 @@ function updateTradeTable(trade) {
         <td>$${price}</td>
     `;
 
-    // Neue Zeile oben hinzufügen
     tradeTableBody.prepend(row);
 
-    // Halte die Tabelle auf maximal 20 Einträge
     if (tradeTableBody.rows.length > 20) {
         tradeTableBody.deleteRow(-1);
     }
@@ -78,7 +75,11 @@ function updateTradeTable(trade) {
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const coinId = urlParams.get("coinId");
-    loadCoinData(coinId);
+    if (coinId) {
+        loadCoinData(coinId);
+    } else {
+        alert("Kein Coin angegeben.");
+    }
 });
 
 // Funktion zur Anzeige der Hotlist mit den Top-Gewinnern aus `localStorage`
@@ -94,17 +95,13 @@ function updateHotlist() {
         listItem.classList.add('coin-item');
 
         const coinLink = document.createElement('a');
-        coinLink.href = `pages/coin-detail.html?coinId=${coin.id}`;
+        coinLink.href = `coin-detail.html?coinId=${coin.id}`;
         coinLink.style.color = 'inherit';
         coinLink.style.textDecoration = 'none';
 
-        // Formatieren des Preises abhängig von der Höhe
-        let displayPrice;
-        if (coin.current_price < 0.01) {
-            displayPrice = coin.current_price.toPrecision(4); // Zeigt vier signifikante Stellen an
-        } else {
-            displayPrice = coin.current_price.toFixed(2); // Zeigt zwei Dezimalstellen an
-        }
+        let displayPrice = coin.current_price < 0.01 
+            ? coin.current_price.toPrecision(4) 
+            : coin.current_price.toFixed(2);
 
         coinLink.textContent = `${coin.name} - $${displayPrice}`;
 
