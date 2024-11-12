@@ -22,6 +22,17 @@ app.get('/api/memecoins', async (req, res) => {
     }
 });
 
+// Sortiere die Top-Gainer und wähle die 12 besten aus
+        const topGainers = data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h).slice(0, 12);
+
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.json(topGainers);
+    } catch (error) {
+        console.error("Fehler beim Abrufen der Top-Gainer-Daten:", error);
+        res.status(500).send('Fehler beim Abrufen der Top-Gainer-Daten');
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server läuft auf http://localhost:${port}`);
 });
