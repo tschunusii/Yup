@@ -33,15 +33,28 @@ function formatCoinValue(value) {
     }
 }
 
+// Favoriten aus localStorage abrufen
+function getFavorites() {
+    return JSON.parse(localStorage.getItem('favorites')) || [];
+}
+
+// Favoriten in localStorage speichern
+function saveFavorites(favorites) {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
 // Funktion zur Anzeige der Memecoins
 function displayTopMemecoins(coins) {
     const memecoinList = document.getElementById('memecoins-list');
     if (!memecoinList) return;
     memecoinList.innerHTML = '';
 
+    const favorites = getFavorites();
+
     coins.forEach((coin, index) => {
         const row = document.createElement('tr');
         const displayPrice = formatCoinValue(coin.current_price);
+        const isFavorite = favorites.includes(coin.id);
 
         row.innerHTML = `
             <td>${(currentPage - 1) * coinsPerPage + index + 1}</td>
@@ -49,7 +62,9 @@ function displayTopMemecoins(coins) {
                 <a href="coin-detail.html?coinId=${coin.id}" style="color: inherit; text-decoration: none;">
                     ${coin.name} (${coin.symbol.toUpperCase()})
                 </a>
-                <a href="#" class="buy-button">Kaufen</a>
+                <span class="favorite-star" data-coin-id="${coin.id}" style="cursor: pointer;">
+                    ${isFavorite ? '⭐' : '☆'}
+                </span>
             </td>
             <td>$${displayPrice}</td>
             <td class="${coin.price_change_percentage_1h_in_currency > 0 ? 'coin-gain' : 'coin-loss'}">
@@ -66,6 +81,27 @@ function displayTopMemecoins(coins) {
         `;
         memecoinList.appendChild(row);
     });
+
+    // Event Listener für Favoriten-Sterne hinzufügen
+    document.querySelectorAll('.favorite-star').forEach(star => {
+        star.addEventListener('click', (event) => toggleFavorite(event.target));
+    });
+}
+
+// Favoriten hinzufügen oder entfernen
+function toggleFavorite(starElement) {
+    const coinId = starElement.getAttribute('data-coin-id');
+    let favorites = getFavorites();
+
+    if (favorites.includes(coinId)) {
+        favorites = favorites.filter(id => id !== coinId);
+        starElement.textContent = '☆'; // Entfernt Favoriten-Markierung
+    } else {
+        favorites.push(coinId);
+        starElement.textContent = '⭐'; // Fügt Favoriten-Markierung hinzu
+    }
+
+    saveFavorites(favorites);
 }
 
 // Funktion zur Aktualisierung der Paginierung
@@ -87,7 +123,7 @@ function changePage(newPage) {
     fetchMemeCoins(currentPage);
 }
 
-// Initialer Aufruf und automatischer Update-Intervall der Hotlist
+// Initialer Aufruf zum Laden der Hauptseite
 if (document.getElementById('memecoins-list')) {
     fetchMemeCoins(currentPage);
 }
