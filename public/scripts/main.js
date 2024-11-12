@@ -73,19 +73,21 @@ function displayTopMemecoins(coins) {
 // Funktion zur Aktualisierung der Paginierung
 function updatePagination(page) {
     const paginationElement = document.getElementById('pagination');
+    if (!paginationElement) return; // Existenzprüfung für das Pagination-Element
+
     paginationElement.innerHTML = `
         <button onclick="changePage(${page - 1})" ${page <= 1 ? 'disabled' : ''}>Vorherige Seite</button>
         <span>Seite ${page}</span>
-        <button onclick="changePage(${page + 1})">Nächste Seite</button>
+        <button onclick="changePage(${page + 1})" ${page >= totalPages ? 'disabled' : ''}>Nächste Seite</button>
     `;
 }
 
 // Funktion zur Änderung der Seite
 function changePage(newPage) {
+    if (newPage < 1 || newPage > totalPages) return; // Seitenbereich prüfen
     currentPage = newPage;
     fetchMemeCoins(currentPage);
 }
-
 
 // Funktion zur Anzeige der Hotlist mit den Top-Gewinnern aus `localStorage`
 function updateHotlist() {
@@ -127,8 +129,6 @@ function updateHotlist() {
 // Initialer Aufruf und Intervall für das automatische Update der Hotlist alle 10 Sekunden
 updateHotlist();
 setInterval(updateHotlist, 10000);
-
-
 
 // Initialer Aufruf zum Laden der Hauptseite
 if (document.getElementById('memecoins-list')) {
