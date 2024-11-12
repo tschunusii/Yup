@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Watchlist</title>
+    <title>Watchlist</title>
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
+
     <!-- Hotlist oben -->
-    <header id="hotlist">
-        <h2>Hotlist</h2>
-        <div id="top-list-wrapper">
-            <ul id="top-list" style="animation: scroll 60s linear infinite;">
-                <!-- Dynamische Inhalte der Hotlist werden hier eingefügt -->
-            </ul>
+    <header>
+        <div id="hotlist">
+            <h2>Hotlist</h2>
+            <div id="top-list-wrapper">
+                <ul id="top-list">
+                    <!-- Dynamische Inhalte der Hotlist -->
+                </ul>
+            </div>
         </div>
     </header>
 
@@ -28,30 +31,31 @@
             <a href="portfolio.html">Portfolio</a>
             <a href="watchlist.html">Watchlist</a>
             <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
-            <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
+            <button id="login-button">Log in / Registrieren</button>
         </div>
     </nav>
 
-    <h1>Meine Watchlist</h1>
-    <p>Alle Coins, die als Favoriten markiert wurden, erscheinen hier.</p>
+    <h1>Top Gewinner und Verlierer</h1>
     
-    <!-- Tabelle für die Watchlist -->
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Preis</th>
-                <th>24h %</th>
-                <th>Markieren</th> <!-- Spalte für Stern/Favoriten-Icon -->
-            </tr>
-        </thead>
-        <tbody id="watchlist">
-            <!-- Dynamisch geladene Favoriten-Coin-Daten -->
-        </tbody>
-    </table>
+    <header>
+        <h2>Meine Watchlist</h2>
+    </header>
 
-    <script src="../scripts/watchlist.js"></script> <!-- Neues Skript für die Watchlist -->
-    <script src="public/scripts/hotlist.js"></script> <!-- einbindung hotlist -->
+    <main>
+        <table id="watchlist-table" class="styled-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Kryptowährung</th>
+                    <th>Kurs</th>
+                </tr>
+            </thead>
+            <tbody id="watchlist-body">
+                <!-- Favoriten werden hier dynamisch geladen -->
+            </tbody>
+        </table>
+    </main>
+
+    <script src="../public/scripts/watchlist.js"></script>
 </body>
 </html>
