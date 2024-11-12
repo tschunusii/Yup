@@ -9,8 +9,9 @@ async function loadWatchlist() {
     }
 
     try {
-        // Anfrage an den Server, um alle Favoriten auf einmal abzurufen
-        const response = await fetch(`/api/coin/${favorites.join(',')}`);
+        const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${favorites.join(',')}`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Daten konnten nicht geladen werden.");
         const data = await response.json();
 
         data.forEach((coin, index) => {
