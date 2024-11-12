@@ -1,6 +1,6 @@
 let currentPage = 1;
 const coinsPerPage = 50;
-const totalCoins = 5000;  // Beispiel für die Gesamtzahl der Coins (anpassen, falls bekannt)
+const totalCoins = 5000; // Beispiel für die Gesamtzahl der Coins (anpassen, falls bekannt)
 const totalPages = Math.ceil(totalCoins / coinsPerPage);
 
 async function fetchMemeCoins(page = 1) {
@@ -11,12 +11,11 @@ async function fetchMemeCoins(page = 1) {
         if (!response.ok) throw new Error("Daten konnten nicht geladen werden.");
         const data = await response.json();
 
-        // Filtert Memecoins mit einer Marktkapitalisierung von 200.000 bis 100.000.000.000 USD
         const filteredData = data.filter(coin => coin.market_cap >= 200000 && coin.market_cap <= 100000000000);
 
         if (Array.isArray(filteredData)) {
             displayTopMemecoins(filteredData);
-            updatePagination(page); // Aktualisiert die Seitenzahl
+            updatePagination(page);
         } else {
             console.error("Ungültige Datenstruktur von API");
         }
@@ -28,10 +27,9 @@ async function fetchMemeCoins(page = 1) {
 
 function formatCoinValue(value) {
     if (value >= 0.01) {
-        return value.toFixed(2); // Für Werte >= 0.01, zeige 2 Dezimalstellen
+        return value.toFixed(2);
     } else {
-        const formattedValue = parseFloat(value.toPrecision(4));
-        return formattedValue.toString();
+        return parseFloat(value.toPrecision(4)).toString();
     }
 }
 
@@ -48,7 +46,7 @@ function displayTopMemecoins(coins) {
         row.innerHTML = `
             <td>${(currentPage - 1) * coinsPerPage + index + 1}</td>
             <td>
-                <a href="pages/coin-detail.html?coinId=${coin.id}" style="color: inherit; text-decoration: none;">
+                <a href="coin-detail.html?coinId=${coin.id}" style="color: inherit; text-decoration: none;">
                     ${coin.name} (${coin.symbol.toUpperCase()})
                 </a>
                 <a href="#" class="buy-button">Kaufen</a>
@@ -73,7 +71,7 @@ function displayTopMemecoins(coins) {
 // Funktion zur Aktualisierung der Paginierung
 function updatePagination(page) {
     const paginationElement = document.getElementById('pagination');
-    if (!paginationElement) return; // Existenzprüfung für das Pagination-Element
+    if (!paginationElement) return;
 
     paginationElement.innerHTML = `
         <button onclick="changePage(${page - 1})" ${page <= 1 ? 'disabled' : ''}>Vorherige Seite</button>
@@ -84,53 +82,12 @@ function updatePagination(page) {
 
 // Funktion zur Änderung der Seite
 function changePage(newPage) {
-    if (newPage < 1 || newPage > totalPages) return; // Seitenbereich prüfen
+    if (newPage < 1 || newPage > totalPages) return;
     currentPage = newPage;
     fetchMemeCoins(currentPage);
 }
 
-// Funktion zur Anzeige der Hotlist mit den Top-Gewinnern aus `localStorage`
-function updateHotlist() {
-    const hotlistElement = document.getElementById('top-list');
-    const hotlistData = JSON.parse(localStorage.getItem('topGainers')) || [];
-
-    if (!hotlistElement) return;
-    hotlistElement.innerHTML = '';
-
-    hotlistData.forEach((coin) => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('coin-item');
-
-        const coinLink = document.createElement('a');
-        coinLink.href = `pages/coin-detail.html?coinId=${coin.id}`;
-        coinLink.style.color = 'inherit';
-        coinLink.style.textDecoration = 'none';
-
-        // Formatieren des Preises abhängig von der Höhe
-        let displayPrice;
-        if (coin.current_price < 0.01) {
-            displayPrice = coin.current_price.toPrecision(4); // Zeigt vier signifikante Stellen an
-        } else {
-            displayPrice = coin.current_price.toFixed(2); // Zeigt zwei Dezimalstellen an
-        }
-
-        coinLink.textContent = `${coin.name} - $${displayPrice}`;
-
-        const changeElement = document.createElement('span');
-        changeElement.textContent = ` (${coin.price_change_percentage_24h > 0 ? '+' : ''}${coin.price_change_percentage_24h.toFixed(2)}%)`;
-        changeElement.classList.add(coin.price_change_percentage_24h > 0 ? 'coin-gain' : 'coin-loss');
-
-        listItem.appendChild(coinLink);
-        listItem.appendChild(changeElement);
-        hotlistElement.appendChild(listItem);
-    });
-}
-
-// Initialer Aufruf und Intervall für das automatische Update der Hotlist alle 10 Sekunden
-updateHotlist();
-setInterval(updateHotlist, 10000);
-
-// Initialer Aufruf zum Laden der Hauptseite
+// Initialer Aufruf und automatischer Update-Intervall der Hotlist
 if (document.getElementById('memecoins-list')) {
     fetchMemeCoins(currentPage);
 }
