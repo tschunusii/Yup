@@ -1,13 +1,13 @@
 let currentPage = 1;
 const coinsPerPage = 50;
-const totalCoins = 5000; // Beispiel für die Gesamtzahl der Coins (anpassen, falls bekannt)
+const totalCoins = 5000;
 const totalPages = Math.ceil(totalCoins / coinsPerPage);
 
 async function fetchMemeCoins(page = 1) {
     const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=meme-token&order=market_cap_desc&per_page=${coinsPerPage}&page=${page}&sparkline=false&price_change_percentage=1h,24h,7d`;
 
     try {
-        const response = await fetch(url, { mode: 'cors' });
+        const response = await fetch(url);
         if (!response.ok) throw new Error("Daten konnten nicht geladen werden.");
         const data = await response.json();
 
@@ -95,10 +95,10 @@ function toggleFavorite(starElement) {
 
     if (favorites.includes(coinId)) {
         favorites = favorites.filter(id => id !== coinId);
-        starElement.textContent = '☆'; // Entfernt Favoriten-Markierung
+        starElement.textContent = '☆';
     } else {
         favorites.push(coinId);
-        starElement.textContent = '⭐'; // Fügt Favoriten-Markierung hinzu
+        starElement.textContent = '⭐';
     }
 
     saveFavorites(favorites);
