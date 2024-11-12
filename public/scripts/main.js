@@ -65,7 +65,6 @@ function displayTopMemecoins(coins) {
             </td>
             <td>$${coin.total_volume?.toLocaleString() ?? 'N/A'}</td>
             <td>$${coin.market_cap?.toLocaleString() ?? 'N/A'}</td>
-            <td><img src="assets/images/chart-icon.png" class="chart-icon" alt="Chart"></td>
         `;
         memecoinList.appendChild(row);
     });
