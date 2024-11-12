@@ -20,6 +20,5 @@ app.get('/api/memecoins', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server läuft auf http://localhost:${port}`);
+    console.log(`Server läuft auf http://localhost:${port}`);
 });
-
