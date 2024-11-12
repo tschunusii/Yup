@@ -7,7 +7,30 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
-    <!-- Header und Navigation wie bei anderen Seiten einfügen -->
+    <!-- Hotlist oben -->
+    <header id="hotlist">
+        <h2>Hotlist</h2>
+        <div id="top-list-wrapper">
+            <ul id="top-list" style="animation: scroll 60s linear infinite;">
+                <!-- Dynamische Inhalte der Hotlist werden hier eingefügt -->
+            </ul>
+        </div>
+    </header>
+
+    <!-- Navigationsleiste -->
+    <nav>
+        <div class="nav-left">
+            <a href="../index.html">Home</a>
+            <a href="nft.html">NFT's</a>
+            <a href="gainers-losers.html">Gewinner und Verlierer</a>
+        </div>
+        <div class="nav-right">
+            <a href="portfolio.html">Portfolio</a>
+            <a href="watchlist.html">Watchlist</a>
+            <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
+            <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
+        </div>
+    </nav>
 
     <h1>Meine Watchlist</h1>
     <p>Alle Coins, die als Favoriten markiert wurden, erscheinen hier.</p>
