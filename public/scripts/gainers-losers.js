@@ -6,14 +6,14 @@ async function fetchGainersAndLosers() {
 
     try {
         const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Daten konnten nicht geladen werden.');
+
         const data = await response.json();
 
-        // Sortiere die Daten nach 24h-Preisänderung
         const sortedData = data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
         const topGainers = sortedData.slice(0, coinsPerList);
         const topLosers = sortedData.slice(-coinsPerList).reverse();
 
-        // Aufruf der displayCoins-Funktion, um die Daten anzuzeigen
         displayCoins(topGainers, 'gainers-list');
         displayCoins(topLosers, 'losers-list');
     } catch (error) {
@@ -35,6 +35,7 @@ function formatCoinValue(value) {
 // Funktion zum Anzeigen von Coins in der Liste (Gainer oder Loser)
 function displayCoins(coins, listId) {
     const listElement = document.getElementById(listId);
+    if (!listElement) return;
     listElement.innerHTML = '';
 
     coins.forEach((coin) => {
@@ -53,4 +54,4 @@ function displayCoins(coins, listId) {
 }
 
 // Initialer Aufruf zum Abrufen und Anzeigen der Gewinner und Verlierer
-fetchGainersAndLosers();
+document.addEventListener('DOMContentLoaded', fetchGainersAndLosers);
