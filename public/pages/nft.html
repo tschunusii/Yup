@@ -1,9 +1,49 @@
-<section id="nft-gallery">
-    <h3>Beliebte NFTs</h3>
-    <div id="nft-list">
-        <!-- NFT-Karten werden hier dynamisch geladen -->
-    </div>
-</section>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beliebte NFTs</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+    <!-- Hotlist oben -->
+    <header>
+        <div id="hotlist">
+            <h2>Hotlist</h2>
+            <div id="top-list-wrapper">
+                <ul id="top-list">
+                    <!-- Dynamische Inhalte der Hotlist -->
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigationsleiste -->
+    <nav>
+        <div class="nav-left">
+            <a href="../index.html">Home</a>
+            <a href="nft.html">NFT's</a>
+            <a href="gainers-losers.html">Gewinner und Verlierer</a>
+        </div>
+        <div class="nav-right">
+            <a href="portfolio.html">Portfolio</a>
+            <a href="watchlist.html">Watchlist</a>
+            <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
+            <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
+        </div>
+    </nav>
+
+    <main>
+        <section id="nft-gallery">
+            <h3>Beliebte NFTs</h3>
+            <div id="nft-list">
+                <!-- NFT-Karten werden hier dynamisch geladen -->
+            </div>
+        </section>
+    </main>
+
     <script src="../public/scripts/nft.js"></script>
 </body>
 </html>
