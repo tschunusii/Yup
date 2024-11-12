@@ -176,6 +176,23 @@ h2, h3 { color: #00c6ff; }
 .styled-table .coin-gain { color: #00ff00; }
 .styled-table .coin-loss { color: #ff0000; }
 
+/* Favoriten-Stern für die Watchlist */
+.favorite-star {
+    font-size: 1.2em;
+    color: #ccc;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.favorite-star:hover {
+    color: gold;
+}
+
+.favorite-star.active {
+    color: gold;
+}
+
+
 /* NFT-Galerie */
 #nft-gallery, .nft-card {
     padding: 20px;
