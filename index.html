@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="public/styles/style.css">
 </head>
 <body>
+    <!-- Mobiler Hamburger-Menü-Button -->
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
     <!-- Hotlist oben -->
     <header>
         <div id="hotlist">
@@ -36,7 +39,6 @@
 
     <!-- Hauptinhalt der Homepage -->
     <main>
-        <!-- Top Memecoins Liste -->
         <section id="top-memecoins">
             <h3>Memecoins</h3>
             <div id="memecoins-container">
@@ -51,6 +53,7 @@
                             <th>7d %</th>
                             <th>24-Stunden-Volumen</th>
                             <th>Marktkapitalisierung</th>
+                            <th>Letzte 7 Tage</th>
                         </tr>
                     </thead>
                     <tbody id="memecoins-list">
@@ -60,20 +63,15 @@
             </div>
         </section>
 
-        <!-- Paginierungs-Element -->
-        <div id="pagination" style="text-align: center; margin-top: 20px;">
-            <!-- Dynamische Paginierung wird hier eingefügt -->
-        </div>
-
         <!-- Login/Signup Modal -->
         <div id="modal-background" class="modal-background" onclick="closeModal()"></div>
-
         <div id="login-signup-modal" class="modal">
+            <!-- Tab Container for Login and Signup -->
             <div class="tab-container">
                 <div id="tab-login" class="tab active" onclick="showLoginTab()">Log In</div>
                 <div id="tab-signup" class="tab" onclick="showSignupTab()">Sign Up</div>
             </div>
-
+            <!-- Login und Signup Formulare -->
             <div id="login-form" class="form-section">
                 <h2>Log in</h2>
                 <form>
@@ -90,7 +88,6 @@
                 <button class="btn-social">Continue with Binance</button>
                 <button class="btn-social">Continue with Wallet</button>
             </div>
-
             <div id="signup-form" class="form-section" style="display: none;">
                 <h2>Sign Up</h2>
                 <form>
@@ -100,7 +97,7 @@
                     <input type="password" placeholder="Enter your password..." required>
                     <label class="checkbox">
                         <input type="checkbox">
-                        Please keep me updated by email with the latest crypto news, research findings, reward programs, event updates, coin listings, and more information from (Website Name).
+                        Bitte halten Sie mich per E-Mail über die neuesten Krypto-News, Forschungsergebnisse, Belohnungsprogramme, Event-Updates, Coin-Listings und mehr auf dem Laufenden.
                     </label>
                     <button type="submit" class="btn-primary">Create an account</button>
                 </form>
@@ -117,5 +114,14 @@
     <!-- Scripts -->
     <script src="public/scripts/main.js"></script>
     <script src="public/scripts/hotlist.js"></script>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-right').classList.toggle('active');
+        }
+        function showLoginTab() { /* ... */ }
+        function showSignupTab() { /* ... */ }
+        function showLoginModal() { /* ... */ }
+        function closeModal() { /* ... */ }
+    </script>
 </body>
 </html>
