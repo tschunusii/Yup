@@ -1,15 +1,15 @@
 const express = require('express');
-const app = express();
-const fetch = require('node-fetch'); // Falls node-fetch verwendet wird
+const fetch = require('node-fetch'); // Falls `node-fetch` verwendet wird
 
+const app = express();
 const port = process.env.PORT || 3000;
-app.use(express.json());
+
 app.use(express.static('public'));
 
-// Proxy-Route zur Umgehung des CORS-Problems für spezifische Coin-Daten
-app.get('/api/coin/:coinId', async (req, res) => {
-    const coinId = req.params.coinId;
-    const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinId}`;
+// CORS-Proxy-Route für CoinGecko, die Anfragen an CoinGecko weiterleitet
+app.get('/api/memecoins', async (req, res) => {
+    const { page = 1 } = req.query;
+    const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=meme-token&order=market_cap_desc&per_page=50&page=${page}&sparkline=false&price_change_percentage=1h,24h,7d`;
 
     try {
         const response = await fetch(url);
@@ -17,8 +17,8 @@ app.get('/api/coin/:coinId', async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.json(data);
     } catch (error) {
-        console.error("Fehler beim Abrufen der Coin-Daten:", error);
-        res.status(500).send('Fehler beim Abrufen der Coin-Daten');
+        console.error("Fehler beim Abrufen der CoinGecko-Daten:", error);
+        res.status(500).send('Fehler beim Abrufen der Daten');
     }
 });
 
