@@ -18,7 +18,11 @@ async function loadWatchlist() {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${index + 1}</td>
-                <td>${coin.name} (${coin.symbol.toUpperCase()})</td>
+                <td>
+                    <a href="coin-detail.html?coinId=${coin.id}" style="color: inherit; text-decoration: none;">
+                        ${coin.name} (${coin.symbol.toUpperCase()})
+                    </a>
+                </td>
                 <td>$${coin.current_price.toFixed(2)}</td>
             `;
             watchlistBody.appendChild(row);
