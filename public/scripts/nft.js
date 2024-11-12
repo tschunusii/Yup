@@ -3,20 +3,19 @@ async function fetchNFTs() {
     const nftList = document.getElementById('nft-list');
     nftList.innerHTML = ''; // Galerie leeren
 
-    // API-Endpunkt für die OpenSea-Assets mit API-Schlüssel im Header
+    // API-Endpunkt für die OpenSea-Assets
     const apiUrl = `https://api.opensea.io/api/v1/assets?order_direction=desc&limit=10`;
 
     try {
         const response = await fetch(apiUrl, {
             headers: {
-                'X-API-KEY': '8982fb44fdfb4303a85526a1de38adf0' // API-Schlüssel im Header
+                'X-API-KEY': 'YOUR_OPENSEA_API_KEY' // API-Schlüssel hier einfügen
             }
         });
 
         if (!response.ok) throw new Error(`Fehler: ${response.status}`);
         const data = await response.json();
 
-        // Überprüfe, ob die Antwort die erwarteten NFT-Daten enthält
         if (data && Array.isArray(data.assets)) {
             displayNFTs(data.assets);
         } else {
@@ -38,7 +37,7 @@ function displayNFTs(nfts) {
         nftCard.classList.add('nft-card');
 
         const nftImage = document.createElement('img');
-        nftImage.src = nft.image_url || 'assets/images/default-nft.png';
+        nftImage.src = nft.image_url || '../assets/images/default-nft.png';
         nftImage.alt = nft.name || 'NFT';
         nftCard.appendChild(nftImage);
 
@@ -46,9 +45,8 @@ function displayNFTs(nfts) {
         nftName.textContent = nft.name || 'Unbekanntes NFT';
         nftCard.appendChild(nftName);
 
-        // Preisinformationen (falls verfügbar)
         const nftPrice = document.createElement('p');
-        const price = nft?.sell_orders?.[0]?.current_price || nft?.last_sale?.payment_token?.price;
+        const price = nft?.sell_orders?.[0]?.current_price || nft?.last_sale?.payment_token?.usd_price;
         nftPrice.textContent = price ? `$${(price / 1e18).toFixed(2)}` : 'Preis nicht verfügbar';
         nftCard.appendChild(nftPrice);
 
@@ -57,4 +55,4 @@ function displayNFTs(nfts) {
 }
 
 // Rufe die NFTs beim Laden der Seite ab
-fetchNFTs();
+document.addEventListener("DOMContentLoaded", fetchNFTs);
