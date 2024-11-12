@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memecoins Hotlist</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="public/styles/style.css">
 </head>
 <body>
     <!-- Hotlist oben -->
@@ -23,12 +23,12 @@
     <nav>
         <div class="nav-left">
             <a href="index.html">Home</a>
-            <a href="pages/nft.html">NFT's</a>
-            <a href="pages/gainers-losers.html">Gewinner und Verlierer</a>
+            <a href="public/pages/nft.html">NFT's</a>
+            <a href="public/pages/gainers-losers.html">Gewinner und Verlierer</a>
         </div>
         <div class="nav-right">
-            <a href="pages/portfolio.html">Portfolio</a>
-            <a href="pages/watchlist.html">Watchlist</a>
+            <a href="public/pages/portfolio.html">Portfolio</a>
+            <a href="public/pages/watchlist.html">Watchlist</a>
             <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
             <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
         </div>
@@ -129,7 +129,7 @@
     </main>
 
     <!-- Scripts -->
-    <script src="scripts/main.js"></script>
+    <script src="public/scripts/main.js"></script>
     <script>
 function showLoginTab() {
     document.getElementById('login-form').style.display = 'block';
@@ -156,7 +156,7 @@ function closeModal() {
     document.getElementById('modal-background').style.display = 'none';
 }
 </script>
-<script src="/scripts/hotlist.js"></script>
+<script src="/public/scripts/hotlist.js"></script>
 
 </body>
 </html>
