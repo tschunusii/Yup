@@ -127,3 +127,45 @@ function changePage(newPage) {
 if (document.getElementById('memecoins-list')) {
     fetchMemeCoins(currentPage);
 }
+
+async function updateHotlist() {
+    const hotlistElement = document.getElementById('top-list');
+
+    try {
+        const response = await fetch('/api/top-gainers');
+        if (!response.ok) throw new Error("Top-Gainer-Daten konnten nicht geladen werden.");
+        const topGainers = await response.json();
+
+        // Laufband zurücksetzen und neue Einträge hinzufügen
+        hotlistElement.innerHTML = '';
+        topGainers.forEach(coin => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('coin-item');
+
+            // Link zum Coin-Detail
+            const coinLink = document.createElement('a');
+            coinLink.href = `coin-detail.html?coinId=${coin.id}`;
+            coinLink.style.color = 'inherit';
+            coinLink.style.textDecoration = 'none';
+
+            // Preis anzeigen
+            const displayPrice = coin.current_price < 0.01 ? coin.current_price.toPrecision(4) : coin.current_price.toFixed(2);
+            coinLink.textContent = `${coin.name} - $${displayPrice}`;
+
+            // Preisänderung anzeigen
+            const changeElement = document.createElement('span');
+            changeElement.textContent = ` (${coin.price_change_percentage_24h > 0 ? '+' : ''}${coin.price_change_percentage_24h.toFixed(2)}%)`;
+            changeElement.classList.add(coin.price_change_percentage_24h > 0 ? 'coin-gain' : 'coin-loss');
+
+            listItem.appendChild(coinLink);
+            listItem.appendChild(changeElement);
+            hotlistElement.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Top-Gainer-Daten:', error);
+    }
+}
+
+// Initialer Aufruf der Hotlist und automatisches Update alle 5 Sekunden
+updateHotlist();
+setInterval(updateHotlist, 5000);
