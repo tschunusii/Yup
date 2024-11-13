@@ -7,9 +7,12 @@ async function updateHotlist() {
     const hotlistElement = document.getElementById('top-list');
 
     try {
-        const response = await fetch('/api/top-gainers');
+        const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`;
+        const response = await fetch(url, { mode: 'cors' });
         if (!response.ok) throw new Error("Top-Gainer-Daten konnten nicht geladen werden.");
-        const topGainers = await response.json();
+        
+        const data = await response.json();
+        const topGainers = data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h).slice(0, 12);
 
         // Laufband zurücksetzen und neue Einträge hinzufügen
         hotlistElement.innerHTML = '';
@@ -41,9 +44,9 @@ async function updateHotlist() {
     }
 }
 
-// Initialer Aufruf der Hotlist und automatisches Update alle 5 Sekunden
+// Initialer Aufruf der Hotlist und automatisches Update alle 10 Minuten
 updateHotlist();
-setInterval(updateHotlist, 5000);
+setInterval(updateHotlist, 600000);  // Alle 10 Minuten
 
 
 async function fetchMemeCoins(page = 1) {
