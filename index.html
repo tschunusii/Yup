@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memecoins Hotlist</title>
     <link rel="stylesheet" href="public/styles/style.css">
+    <style>
+        /* Zusätzliche einfache Styling-Optionen */
+        #portfolio, #watchlist { display: none; }
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -26,10 +31,11 @@
             <a href="public/pages/gainers-losers.html">Gewinner und Verlierer</a>
         </div>
         <div class="nav-right">
-            <a href="public/pages/portfolio.html">Portfolio</a>
-            <a href="public/pages/watchlist.html">Watchlist</a>
+            <a href="public/pages/portfolio.html" id="portfolio">Portfolio</a>
+            <a href="public/pages/watchlist.html" id="watchlist">Watchlist</a>
             <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
             <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
+            <button id="logout-button" class="hidden" onclick="logout()">Abmelden</button>
         </div>
     </nav>
 
@@ -66,39 +72,23 @@
             </div>
             <div id="login-form" class="form-section">
                 <h2>Log in</h2>
-                <form>
-                    <label>Email Address</label>
-                    <input type="email" placeholder="Enter your email address..." required>
-                    <label>Password</label>
-                    <a href="#" class="forgot-password">Forgot password?</a>
-                    <input type="password" placeholder="Enter your password..." required>
+                <form onsubmit="login(); return false;">
+                    <label>Nutzername</label>
+                    <input type="text" id="login-username" placeholder="Nutzername" required>
+                    <label>Passwort</label>
+                    <input type="password" id="login-password" placeholder="Passwort" required>
                     <button type="submit" class="btn-primary">Log In</button>
                 </form>
-                <div class="or-divider">or</div>
-                <button class="btn-social">Continue with Google</button>
-                <button class="btn-social">Continue with Apple</button>
-                <button class="btn-social">Continue with Binance</button>
-                <button class="btn-social">Continue with Wallet</button>
             </div>
             <div id="signup-form" class="form-section" style="display: none;">
                 <h2>Sign Up</h2>
-                <form>
-                    <label>Email Address</label>
-                    <input type="email" placeholder="Enter your email address..." required>
-                    <label>Password</label>
-                    <input type="password" placeholder="Enter your password..." required>
-                    <label class="checkbox">
-                        <input type="checkbox">
-                        Bitte halten Sie mich per E-Mail über die neuesten Krypto-News, Forschungsergebnisse, Belohnungsprogramme, Event-Updates, Coin-Listings und mehr auf dem Laufenden.
-                    </label>
-                    <button type="submit" class="btn-primary">Create an account</button>
+                <form onsubmit="register(); return false;">
+                    <label>Nutzername</label>
+                    <input type="text" id="username" placeholder="Nutzername" required>
+                    <label>Passwort</label>
+                    <input type="password" id="password" placeholder="Passwort" required>
+                    <button type="submit" class="btn-primary">Registrieren</button>
                 </form>
-                <div class="or-divider">or</div>
-                <button class="btn-social">Continue with Google</button>
-                <button class="btn-social">Continue with Apple</button>
-                <button class="btn-social">Continue with Binance</button>
-                <button class="btn-social">Continue with Wallet</button>
-                <p>By proceeding, you agree to the Website’s Terms of Use & Privacy Policy.</p>
             </div>
         </div>
     </main>
@@ -106,26 +96,89 @@
     <script src="public/scripts/main.js"></script>
     <script src="public/scripts/hotlist.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+            updateUI(isAuthenticated);
+        });
+
+        function register() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (!validatePassword(password)) {
+                alert("Das Passwort muss mindestens einen Großbuchstaben und zwei Zahlen enthalten.");
+                return;
+            }
+
+            if (localStorage.getItem(username)) {
+                alert("Dieser Nutzername ist bereits vergeben.");
+                return;
+            }
+
+            localStorage.setItem(username, password);
+            alert("Registrierung erfolgreich!");
+            showLoginTab();
+        }
+
+        function validatePassword(password) {
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasTwoNumbers = /[0-9].*[0-9]/.test(password);
+            return hasUpperCase && hasTwoNumbers;
+        }
+
+        function login() {
+            const username = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+
+            const storedPassword = localStorage.getItem(username);
+            if (storedPassword && storedPassword === password) {
+                localStorage.setItem("isAuthenticated", "true");
+                alert("Anmeldung erfolgreich!");
+                updateUI(true);
+                closeModal();
+            } else {
+                alert("Falscher Benutzername oder Passwort.");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("isAuthenticated");
+            updateUI(false);
+        }
+
+        function updateUI(isAuthenticated) {
+            document.getElementById("login-button").classList.toggle("hidden", isAuthenticated);
+            document.getElementById("logout-button").classList.toggle("hidden", !isAuthenticated);
+            document.getElementById("portfolio").classList.toggle("hidden", !isAuthenticated);
+            document.getElementById("watchlist").classList.toggle("hidden", !isAuthenticated);
+            document.getElementById("login-form").reset();
+            document.getElementById("signup-form").reset();
+        }
+
         function toggleMenu() {
             document.querySelector('.nav-right').classList.toggle('active');
         }
+
         function showLoginTab() {
             document.getElementById('login-form').style.display = 'block';
             document.getElementById('signup-form').style.display = 'none';
             document.getElementById('tab-login').classList.add('active');
             document.getElementById('tab-signup').classList.remove('active');
         }
+
         function showSignupTab() {
             document.getElementById('signup-form').style.display = 'block';
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('tab-signup').classList.add('active');
             document.getElementById('tab-login').classList.remove('active');
         }
+
         function showLoginModal() {
             showLoginTab();
             document.getElementById('login-signup-modal').style.display = 'block';
             document.getElementById('modal-background').style.display = 'block';
         }
+
         function closeModal() {
             document.getElementById('login-signup-modal').style.display = 'none';
             document.getElementById('modal-background').style.display = 'none';
