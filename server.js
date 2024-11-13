@@ -1,6 +1,5 @@
 const express = require('express');
 const fetch = require('node-fetch');
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -22,17 +21,15 @@ app.get('/api/memecoins', async (req, res) => {
     }
 });
 
-// Neue Route für die Top-Gainer
-app.get('/api/top-gainers', async (req, res) => {
-    const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`;
 
+// Route für Top-Gainer, die die Daten von CoinGecko abruft und zurückgibt
+app.get('/api/top-gainers', async (req, res) => {
     try {
-        const response = await fetch(url);
+        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=meme-token&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h');
         const data = await response.json();
 
-        // Sortiere die Top-Gainer und wähle die 12 besten aus
+        // Die 12 besten Gewinner auswählen
         const topGainers = data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h).slice(0, 12);
-
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.json(topGainers);
     } catch (error) {
