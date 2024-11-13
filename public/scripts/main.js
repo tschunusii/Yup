@@ -47,7 +47,7 @@ async function updateHotlist() {
 
 // Initialer Aufruf der Hotlist und automatisches Update alle 10 Minuten
 updateHotlist();
-setInterval(updateHotlist, 60000);  // Alle 10 Minuten
+setInterval(updateHotlist, 600000);  // Alle 10 Minuten
 
 
 async function fetchMemeCoins(page = 1) {
