@@ -19,7 +19,7 @@ async function updateHotlist() {
 
             // Link zum Coin-Detail
             const coinLink = document.createElement('a');
-            coinLink.href = `coin-detail.html?coinId=${coin.id}`;
+            coinLink.href = `public/pages/coin-detail.html?coinId=${coin.id}`;
             coinLink.style.color = 'inherit';
             coinLink.style.textDecoration = 'none';
 
@@ -102,7 +102,7 @@ function displayTopMemecoins(coins) {
         row.innerHTML = `
             <td>${(currentPage - 1) * coinsPerPage + index + 1}</td>
             <td>
-                <a href="coin-detail.html?coinId=${coin.id}" style="color: inherit; text-decoration: none;">
+                <a href="public/pages/coin-detail.html?coinId=${coin.id}" style="color: inherit; text-decoration: none;">
                     ${coin.name} (${coin.symbol.toUpperCase()})
                 </a>
                 <span class="favorite-star" data-coin-id="${coin.id}" style="cursor: pointer;">
