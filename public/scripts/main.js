@@ -7,6 +7,7 @@ async function updateHotlist() {
     const hotlistElement = document.getElementById('top-list');
 
     try {
+        // Direkter Aufruf der CoinGecko API
         const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`;
         const response = await fetch(url, { mode: 'cors' });
         if (!response.ok) throw new Error("Top-Gainer-Daten konnten nicht geladen werden.");
