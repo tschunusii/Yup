@@ -495,3 +495,34 @@ h2, h3 { color: #00c6ff; }
         .modal-backdrop { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; }
         input[type="number"], select { width: 100%; padding: 8px; margin: 10px 0; background-color: #2b3b52; color: #ffffff; border: none; border-radius: 5px; }
         button { padding: 10px 20px; background-color: #00c6ff; color: #1a1f2b; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
+/* Stile für die Coin-Informationen in einer horizontalen Reihe */
+        .coin-info-row {
+            display: flex;
+            flex-wrap: wrap; /* Zeilenumbruch bei kleinen Bildschirmen */
+            justify-content: center; /* Zentriert die Kacheln */
+            gap: 20px; /* Abstand zwischen den Kacheln */
+            padding: 20px;
+        }
+
+        .info-tile {
+            background-color: #1f2937;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 200px; /* Mindestbreite der Kacheln */
+            flex: 1; /* Macht die Kacheln gleichmäßig groß */
+            max-width: 250px; /* Optionale maximale Breite */
+        }
+
+        .info-tile .label {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .info-tile .value {
+            font-size: 1.2em;
+        }
