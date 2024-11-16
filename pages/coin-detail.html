@@ -5,152 +5,69 @@
     <title>Coin-Detail</title>
     <link rel="stylesheet" href="../styles/style.css">
     <style>
-        /* Hauptcontainer-Layout für links Coin-Info, rechts Chart */
+        /* CSS Änderungen */
         .container {
             display: flex;
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 20px 0;
-            gap: 1%;
+            flex-direction: row;
+            width: 80%; /* 80% Breite */
+            margin: 0 auto; /* Zentrierung des Containers */
+            padding: 20px 0; /* Vertikale Abstände */
+            gap: 1%; /* Abstand zwischen den flex-Items */
         }
 
-        /* Linker Abstand */
-        .left-gap {
-            width: 2%;
-        }
-
-        /* Coin-Informationen (18% der Breite) */
         .coin-info {
-            width: 18%;
+            width: 20%; /* Angepasst, um Platz zu machen */
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        /* Styling für Coin-Header mit Logo und Namen */
-        .coin-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background-color: #333333; /* Farbcode des Hotlist-Bereichs */
-            border-radius: 8px;
-        }
-
-        /* Coin-Logo */
-        .coin-logo {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-
-        /* Styling der Info-Tiles */
-        .info-tile {
-            padding: 15px;
-            background-color: #333333; /* Farbcode des Hotlist-Bereichs */
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1em;
-            color: #ffffff;
-        }
-        .info-tile .label {
-            font-weight: bold;
-        }
-        .info-tile .value {
-            text-align: right;
-        }
-        .positive {
-            color: green;
-        }
-        .negative {
-            color: red;
-        }
-
-        /* Chart-Container (76% der Breite, ohne weiße Ränder) */
         .chart-container {
-            width: 76%;
+            width: 75%; /* Hauptbreite für den Chart */
             border-radius: 8px;
             background-color: transparent;
             padding: 0;
         }
 
-        /* Rechter Abstand */
-        .right-gap {
-            width: 2%;
+        /* Allgemeine Stile für eine bessere Darstellung */
+        body {
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background-color: #131722;
+            margin: 0;
         }
 
-        /* Logo und Name zentriert im Header */
-        .header-layout {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 0;
-            text-align: center;
+        nav {
+            background-color: #1a1f2b;
+            padding: 10px 0;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        #logo {
-            width: 100px; /* Größe anpassen, um wie auf der Hauptseite zu wirken */
-            height: auto;
-        }
-
-        #site-name {
-            font-size: 2em;
-            font-weight: bold;
+        nav a {
             color: #00c6ff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
 
-   <!-- Header-Layout mit Logo und Seitennamen -->
-    <div class="header-layout">
-        <div class="logo-container">
-            <img id="logo" src="../assets/images/logo2.png" alt="MemeOnly Logo">
-            <div id="site-name">MemeOnly</div>
-        </div>
-    </div>
-
-    <!-- Hotlist-Bereich -->
-    <header>
-        <div id="hotlist">
-            <div id="top-list-wrapper">
-                <ul id="top-list">
-                    <!-- Dynamische Inhalte der Hotlist -->
-                </ul>
-            </div>
-        </div>
-    </header>
-
     <!-- Navigationsleiste -->
     <nav>
-        <div class="nav-left">
-            <a href="../index.html">Home</a>
-            <a href="../pages/nft.html">NFT's</a>
-            <a href="../pages/gainers-losers.html">gainers & losers</a>
-        </div>
-        <div class="nav-right">
-            <a href="../pages/portfolio.html" onclick="accessRestrictedPage('portfolio')">Portfolio</a>
-            <a href="../pages/watchlist.html" onclick="accessRestrictedPage('watchlist')">Watchlist</a>
-            <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
-            <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
-            <button id="logout-button" class="hidden" onclick="logout()">Abmelden</button>
-        </div>
+        <a href="../index.html">Home</a>
+        <a href="../pages/nft.html">NFT's</a>
+        <a href="../pages/gainers-losers.html">Gainers & Losers</a>
+        <a href="../pages/portfolio.html">Portfolio</a>
+        <a href="../pages/watchlist.html">Watchlist</a>
     </nav>
 
-    <!-- Hauptcontainer mit Abständen und Layout -->
+    <!-- Hauptcontainer -->
     <div class="container">
-        <!-- Linker Abstand (2%) -->
-        <div class="left-gap"></div>
-
-        <!-- Links: Coin-Informationen (18%) -->
+        <!-- Links: Coin-Informationen -->
         <div class="coin-info">
             <div class="coin-header">
                 <img id="coin-logo" src="../assets/images/default-logo.png" alt="Coin Logo" class="coin-logo">
@@ -159,65 +76,20 @@
                     <h3 id="coin-symbol">Coin Symbol - Rang #</h3>
                 </div>
             </div>
-
             <div class="info-tile">
                 <div class="label">Market Cap</div>
                 <div class="value" id="market-cap">$0.00</div>
             </div>
-
-            <div class="info-tile">
-                <div class="label">Volume (24h)</div>
-                <div class="value" id="volume-24h">$0.00</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">FDV</div>
-                <div class="value" id="fdv">$0.00</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Vol/Mkt Cap (24h)</div>
-                <div class="value" id="vol-mkt-cap">0%</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Total Supply</div>
-                <div class="value" id="total-supply">0 BTC</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Max. Supply</div>
-                <div class="value" id="max-supply">0 BTC</div>
-            </div>
         </div>
 
-        <!-- Chart-Container (76%) -->
+        <!-- Chart-Container -->
         <div class="chart-container">
             <section id="chart-section">
                 <div id="tradingview-chart-container"></div>
             </section>
-
-            <section id="trade-section">
-                <table id="trade-table">
-                    <thead>
-                        <tr>
-                            <th>Zeit</th>
-                            <th>Art</th>
-                            <th>Menge</th>
-                            <th>Preis</th>
-                        </tr>
-                    </thead>
-                    <tbody id="trade-data"></tbody>
-                </table>
-            </section>
         </div>
-
-        <!-- Rechter Abstand (2%) -->
-        <div class="right-gap"></div>
     </div>
 
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script src="../scripts/coin-detail.js"></script>
-    <script src="../scripts/hotlist.js"></script> <!-- Einbindung der Hotlist -->
 </body>
 </html>
