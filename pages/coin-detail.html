@@ -5,53 +5,54 @@
     <title>Coin-Detail</title>
     <link rel="stylesheet" href="../styles/style.css">
     <style>
-        /* CSS Änderungen */
-        .container {
-            display: flex;
-            flex-direction: row;
-            width: 80%; /* 80% Breite */
-            margin: 0 auto; /* Zentrierung des Containers */
-            padding: 20px 0; /* Vertikale Abstände */
-            gap: 1%; /* Abstand zwischen den flex-Items */
-        }
+        /* Container für den Hauptinhalt */
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 80%; /* 80% Breite */
+    margin: 0 auto; /* Zentriert den Container */
+    padding: 20px 0; /* Vertikale Abstände */
+    gap: 1%; /* Abstand zwischen den flex-Items */
+}
 
-        .coin-info {
-            width: 20%; /* Angepasst, um Platz zu machen */
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.coin-info {
+    width: 20%; /* Linke Spalte (Coin-Informationen) */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .chart-container {
-            width: 75%; /* Hauptbreite für den Chart */
-            border-radius: 8px;
-            background-color: transparent;
-            padding: 0;
-        }
+.chart-container {
+    width: 75%; /* Rechte Spalte (Chart) */
+    border-radius: 8px;
+    background-color: transparent;
+    padding: 0;
+}
 
-        /* Allgemeine Stile für eine bessere Darstellung */
-        body {
-            font-family: Arial, sans-serif;
-            color: #ffffff;
-            background-color: #131722;
-            margin: 0;
-        }
+/* Styling für die Navigationsleiste */
+nav {
+    background-color: #1a1f2b;
+    padding: 10px 0;
+}
 
-        nav {
-            background-color: #1a1f2b;
-            padding: 10px 0;
-        }
+nav a {
+    color: #00c6ff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
 
-        nav a {
-            color: #00c6ff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
+nav a:hover {
+    color: #ffffff;
+}
 
-        nav a:hover {
-            color: #ffffff;
-        }
+/* Allgemeine Layout-Optimierungen */
+body {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    background-color: #131722;
+    margin: 0;
+}
     </style>
 </head>
 <body>
