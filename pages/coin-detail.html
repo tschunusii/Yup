@@ -5,70 +5,51 @@
     <title>Coin-Detail</title>
     <link rel="stylesheet" href="../styles/style.css">
     <style>
-        /* Container für den Hauptinhalt */
-.container {
-    display: flex;
-    flex-direction: row;
-    width: 80%; /* 80% Breite */
-    margin: 0 auto; /* Zentriert den Container */
-    padding: 20px 0; /* Vertikale Abstände */
-    gap: 1%; /* Abstand zwischen den flex-Items */
-}
-
-.coin-info {
-    width: 20%; /* Linke Spalte (Coin-Informationen) */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.chart-container {
-    width: 75%; /* Rechte Spalte (Chart) */
-    border-radius: 8px;
-    background-color: transparent;
-    padding: 0;
-}
-
-/* Styling für die Navigationsleiste */
-nav {
-    background-color: #1a1f2b;
-    padding: 10px 0;
-}
-
-nav a {
-    color: #00c6ff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: bold;
-}
-
-nav a:hover {
-    color: #ffffff;
-}
-
-/* Allgemeine Layout-Optimierungen */
-body {
-    font-family: Arial, sans-serif;
-    color: #ffffff;
-    background-color: #131722;
-    margin: 0;
-}
     </style>
 </head>
 <body>
 
+   <!-- Header-Layout mit Logo und Seitennamen -->
+    <div class="header-layout">
+        <div class="logo-container">
+            <img id="logo" src="../assets/images/logo2.png" alt="MemeOnly Logo">
+            <div id="site-name">MemeOnly</div>
+        </div>
+    </div>
+
+    <!-- Hotlist-Bereich -->
+    <header>
+        <div id="hotlist">
+            <div id="top-list-wrapper">
+                <ul id="top-list">
+                    <!-- Dynamische Inhalte der Hotlist -->
+                </ul>
+            </div>
+        </div>
+    </header>
+
     <!-- Navigationsleiste -->
     <nav>
-        <a href="../index.html">Home</a>
-        <a href="../pages/nft.html">NFT's</a>
-        <a href="../pages/gainers-losers.html">Gainers & Losers</a>
-        <a href="../pages/portfolio.html">Portfolio</a>
-        <a href="../pages/watchlist.html">Watchlist</a>
+        <div class="nav-left">
+            <a href="../index.html">Home</a>
+            <a href="../pages/nft.html">NFT's</a>
+            <a href="../pages/gainers-losers.html">Gewinner und Verlierer</a>
+        </div>
+        <div class="nav-right">
+            <a href="../pages/portfolio.html" onclick="accessRestrictedPage('portfolio')">Portfolio</a>
+            <a href="../pages/watchlist.html" onclick="accessRestrictedPage('watchlist')">Watchlist</a>
+            <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
+            <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
+            <button id="logout-button" class="hidden" onclick="logout()">Abmelden</button>
+        </div>
     </nav>
 
-    <!-- Hauptcontainer -->
+    <!-- Hauptcontainer mit Abständen und Layout -->
     <div class="container">
-        <!-- Links: Coin-Informationen -->
+        <!-- Linker Abstand (2%) -->
+        <div class="left-gap"></div>
+
+        <!-- Links: Coin-Informationen (18%) -->
         <div class="coin-info">
             <div class="coin-header">
                 <img id="coin-logo" src="../assets/images/default-logo.png" alt="Coin Logo" class="coin-logo">
@@ -77,20 +58,65 @@ body {
                     <h3 id="coin-symbol">Coin Symbol - Rang #</h3>
                 </div>
             </div>
+
             <div class="info-tile">
                 <div class="label">Market Cap</div>
                 <div class="value" id="market-cap">$0.00</div>
             </div>
+
+            <div class="info-tile">
+                <div class="label">Volume (24h)</div>
+                <div class="value" id="volume-24h">$0.00</div>
+            </div>
+
+            <div class="info-tile">
+                <div class="label">FDV</div>
+                <div class="value" id="fdv">$0.00</div>
+            </div>
+
+            <div class="info-tile">
+                <div class="label">Vol/Mkt Cap (24h)</div>
+                <div class="value" id="vol-mkt-cap">0%</div>
+            </div>
+
+            <div class="info-tile">
+                <div class="label">Total Supply</div>
+                <div class="value" id="total-supply">0 BTC</div>
+            </div>
+
+            <div class="info-tile">
+                <div class="label">Max. Supply</div>
+                <div class="value" id="max-supply">0 BTC</div>
+            </div>
         </div>
 
-        <!-- Chart-Container -->
+        <!-- Chart-Container (76%) -->
         <div class="chart-container">
             <section id="chart-section">
                 <div id="tradingview-chart-container"></div>
             </section>
+
+            <section id="trade-section">
+                <table id="trade-table">
+                    <thead>
+                        <tr>
+                            <th>Zeit</th>
+                            <th>Art</th>
+                            <th>Menge</th>
+                            <th>Preis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trade-data"></tbody>
+                </table>
+            </section>
         </div>
+
+        <!-- Rechter Abstand (2%) -->
+        <div class="right-gap"></div>
     </div>
 
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script src="../scripts/coin-detail.js"></script>
+    <script src="../scripts/hotlist.js"></script> <!-- Einbindung der Hotlist -->
 </body>
 </html>
