@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+    <!-- Header-Layout mit Logo und Seitennamen -->
+    <div class="header-layout">
+        <div class="logo-container">
+            <img id="logo" src="../assets/images/logo2.png" alt="MemeOnly Logo">
+            <div id="site-name">MemeOnly</div>
+        </div>
+    </div>
+
+    <!-- Hotlist-Bereich -->
+    <header>
+        <div id="hotlist">
+            <div id="top-list-wrapper">
+                <ul id="top-list">
+                    <!-- Dynamische Inhalte der Hotlist -->
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigationsleiste -->
+    <nav>
+        <div class="nav-left">
+            <a href="../index.html">Home</a>
+            <a href="../pages/nft.html">NFT's</a>
+            <a href="../pages/gainers-losers.html">Gewinner und Verlierer</a>
+        </div>
+        <div class="nav-right">
+            <a href="../pages/portfolio.html">Portfolio</a>
+            <a href="../pages/watchlist.html">Watchlist</a>
+            <input type="text" placeholder="Suche nach Coins oder NFTs" id="search-bar">
+            <button id="login-button" onclick="showLoginModal()">Log in / Registrieren</button>
+            <button id="logout-button" class="hidden" onclick="logout()">Abmelden</button>
+        </div>
+    </nav>
+
+    <!-- Wrapper für linke Navigationsleiste und Hauptinhalt -->
+    <div class="content-wrapper">
+        <div class="portfolio-nav">
+            <h3>
+                Meine Portfolios <span id="portfolio-count">(0)</span>
+                <span class="add-portfolio-btn" onclick="createPortfolio()">+</span>
+            </h3>
+            <div id="portfolio-list"></div>
+        </div>
+
+        <!-- Hauptinhalt -->
+        <div class="main-content">
+            <div class="portfolio-header">
+                <h2 id="portfolio-name">Wählen Sie ein Portfolio</h2>
+                <div class="portfolio-summary">
+                    <div class="value" id="portfolio-total-value">$0,00</div>
+                    <div class="value" id="portfolio-gain-loss">0,00 - 24%</div>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('overview')">Übersicht</div>
+                <div class="tab" onclick="showTab('transaction')">Transaktionen</div>
+            </div>
+
+            <!-- Übersicht-Inhalt -->
+            <div id="overview" class="tab-content">
+                <h3>Vermögenswerte 
+                    <button class="add-transaction-btn" onclick="openTransactionModal()">+ Add Transaction</button>
+                </h3>
+                <table class="assets-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Preis</th>
+                            <th>Menge</th>
+                            <th>Ø Kaufpreis</th>
+                            <th>Gesamtwert</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assets-list">
+                        <!-- Dynamische Inhalte für Vermögenswerte -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="transaction" class="tab-content hidden">
+                <h3>Transaktionen</h3>
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Typ</th>
+                            <th>Datum</th>
+                            <th>Vermögenswert</th>
+                            <th>Preis</th>
+                            <th>Menge</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-list">
+                        <!-- Dynamische Inhalte für Transaktionen -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales Fenster für Transaktionen -->
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal" id="transaction-modal">
+        <div class="modal-header">
+            <h2>Transaktion hinzufügen</h2>
+            <span onclick="closeTransactionModal()">✕</span>
+        </div>
+        <div class="tab-buttons">
+            <div class="tab-button active" onclick="selectTransactionType('Kauf')">Kaufen</div>
+            <div class="tab-button" onclick="selectTransactionType('Verkauf')">Verkaufen</div>
+        </div>
+        <div class="modal-content">
+            <input type="text" id="coin-search" placeholder="Coin suchen" onkeyup="filterCoinList()">
+            <select id="coin-select" onchange="fetchCoinPrice()">
+                <!-- Dynamische Coins werden hier geladen -->
+            </select>
+            <input type="number" id="price" placeholder="Preis pro Coin" readonly>
+            <input type="number" id="quantity" placeholder="Menge">
+            <button onclick="addTransaction()">Transaktion hinzufügen</button>
+        </div>
+    </div>
+
+    <script src="../scripts/portfolio.js"></script> <!-- Script für Portfolio-Funktionen -->
+    <script src="public/scripts/hotlist.js"></script> <!-- einbindung hotlist -->
+</body>
+</html>
