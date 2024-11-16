@@ -5,11 +5,38 @@
     <title>Coin-Detail</title>
     <link rel="stylesheet" href="../styles/style.css">
     <style>
+        /* Stile für die Coin-Informationen */
+        .coin-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive Kacheln */
+            gap: 20px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .info-tile {
+            background-color: #1f2937;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-tile .label {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .info-tile .value {
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
 
-   <!-- Header-Layout mit Logo und Seitennamen -->
+    <!-- Header-Layout mit Logo und Seitennamen -->
     <div class="header-layout">
         <div class="logo-container">
             <img id="logo" src="../assets/images/logo2.png" alt="MemeOnly Logo">
@@ -44,79 +71,57 @@
         </div>
     </nav>
 
-    <!-- Hauptcontainer mit Abständen und Layout -->
-    <div class="container">
-        <!-- Linker Abstand (2%) -->
-        <div class="left-gap"></div>
-
-        <!-- Links: Coin-Informationen (18%) -->
-        <div class="coin-info">
-            <div class="coin-header">
-                <img id="coin-logo" src="../assets/images/default-logo.png" alt="Coin Logo" class="coin-logo">
-                <div>
-                    <h2 id="coin-name">Coin Name</h2>
-                    <h3 id="coin-symbol">Coin Symbol - Rang #</h3>
-                </div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Market Cap</div>
-                <div class="value" id="market-cap">$0.00</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Volume (24h)</div>
-                <div class="value" id="volume-24h">$0.00</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">FDV</div>
-                <div class="value" id="fdv">$0.00</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Vol/Mkt Cap (24h)</div>
-                <div class="value" id="vol-mkt-cap">0%</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Total Supply</div>
-                <div class="value" id="total-supply">0 BTC</div>
-            </div>
-
-            <div class="info-tile">
-                <div class="label">Max. Supply</div>
-                <div class="value" id="max-supply">0 BTC</div>
-            </div>
+    <!-- Coin-Informationen als Kacheln -->
+    <div class="coin-info-grid">
+        <div class="info-tile">
+            <div class="label">Market Cap</div>
+            <div class="value" id="market-cap">$0.00</div>
         </div>
-
-        <!-- Chart-Container (76%) -->
-        <div class="chart-container">
-            <section id="chart-section">
-                <div id="tradingview-chart-container"></div>
-            </section>
-
-            <section id="trade-section">
-                <table id="trade-table">
-                    <thead>
-                        <tr>
-                            <th>Zeit</th>
-                            <th>Art</th>
-                            <th>Menge</th>
-                            <th>Preis</th>
-                        </tr>
-                    </thead>
-                    <tbody id="trade-data"></tbody>
-                </table>
-            </section>
+        <div class="info-tile">
+            <div class="label">Volume (24h)</div>
+            <div class="value" id="volume-24h">$0.00</div>
         </div>
+        <div class="info-tile">
+            <div class="label">FDV</div>
+            <div class="value" id="fdv">$0.00</div>
+        </div>
+        <div class="info-tile">
+            <div class="label">Vol/Mkt Cap (24h)</div>
+            <div class="value" id="vol-mkt-cap">0%</div>
+        </div>
+        <div class="info-tile">
+            <div class="label">Total Supply</div>
+            <div class="value" id="total-supply">0 BTC</div>
+        </div>
+        <div class="info-tile">
+            <div class="label">Max. Supply</div>
+            <div class="value" id="max-supply">0 BTC</div>
+        </div>
+    </div>
 
-        <!-- Rechter Abstand (2%) -->
-        <div class="right-gap"></div>
+    <!-- Chart-Container -->
+    <div class="chart-container">
+        <section id="chart-section">
+            <div id="tradingview-chart-container"></div>
+        </section>
+
+        <section id="trade-section">
+            <table id="trade-table">
+                <thead>
+                    <tr>
+                        <th>Zeit</th>
+                        <th>Art</th>
+                        <th>Menge</th>
+                        <th>Preis</th>
+                    </tr>
+                </thead>
+                <tbody id="trade-data"></tbody>
+            </table>
+        </section>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script src="../scripts/coin-detail.js"></script>
-    <script src="../scripts/hotlist.js"></script> <!-- Einbindung der Hotlist -->
+    <script src="../scripts/hotlist.js"></script>
 </body>
 </html>
