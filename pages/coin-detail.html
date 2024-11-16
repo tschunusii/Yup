@@ -5,13 +5,13 @@
     <title>Coin-Detail</title>
     <link rel="stylesheet" href="../styles/style.css">
     <style>
-        /* Stile für die Coin-Informationen */
-        .coin-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive Kacheln */
-            gap: 20px;
+        /* Stile für die Coin-Informationen in einer horizontalen Reihe */
+        .coin-info-row {
+            display: flex;
+            flex-wrap: wrap; /* Zeilenumbruch bei kleinen Bildschirmen */
+            justify-content: center; /* Zentriert die Kacheln */
+            gap: 20px; /* Abstand zwischen den Kacheln */
             padding: 20px;
-            margin: 0 auto;
         }
 
         .info-tile {
@@ -21,6 +21,9 @@
             border-radius: 8px;
             text-align: center;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 200px; /* Mindestbreite der Kacheln */
+            flex: 1; /* Macht die Kacheln gleichmäßig groß */
+            max-width: 250px; /* Optionale maximale Breite */
         }
 
         .info-tile .label {
@@ -71,8 +74,8 @@
         </div>
     </nav>
 
-    <!-- Coin-Informationen als Kacheln -->
-    <div class="coin-info-grid">
+    <!-- Coin-Informationen in einer horizontalen Reihe -->
+    <div class="coin-info-row">
         <div class="info-tile">
             <div class="label">Market Cap</div>
             <div class="value" id="market-cap">$0.00</div>
