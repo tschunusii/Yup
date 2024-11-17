@@ -6,33 +6,6 @@
     <title>Memecoins Hotlist</title>
     <link rel="stylesheet" href="styles/style.css">
     <style>
-        .hidden { display: none; }
-        .header-layout {
-            display: flex;
-            max-width: 100%;
-            margin: 0 auto;
-            padding-top: 20px;
-            align-items: center;
-            justify-content: center;
-        }
-        .left-gap, .right-gap { width: 15%; }
-        .logo-container {
-            width: 70%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 15px;
-        }
-        #logo { width: 150px; height: auto; }
-        #site-name { font-size: 2em; font-weight: bold; color: #00c6ff; }
-        .table-layout {
-            display: flex;
-            max-width: 100%;
-            margin: 0 auto;
-            padding-top: 20px;
-        }
-        .main-table-container { width: 70%; }
     </style>
 </head>
 <body>
@@ -59,7 +32,7 @@
         <div class="nav-left">
             <a href="index.html">Home</a>
             <a href="pages/nft.html">NFT's</a>
-            <a href="pages/gainers-losers.html">gainers & losers</a>
+            <a href="pages/gainers-losers.html">Gewinner und Verlierer</a>
         </div>
         <div class="nav-right">
             <a href="pages/portfolio.html" onclick="accessRestrictedPage('portfolio')">Portfolio</a>
@@ -80,11 +53,14 @@
                         <table id="memecoins-table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Kryptowährung</th>
-                                    <th>Kurs</th>
-                                    <th>24h %</th>
-                                    <th>Marktkapitalisierung</th>
+                                    <th onclick="sortTable(0)">#</th>
+                                    <th onclick="sortTable(1)">Kryptowährung</th>
+                                    <th onclick="sortTable(2)">Kurs</th>
+                                    <th onclick="sortTable(3)">1h %</th>
+                                    <th onclick="sortTable(4)">24h %</th>
+                                    <th onclick="sortTable(5)">7d %</th>
+                                    <th onclick="sortTable(6)">24-Stunden-Volumen</th>
+                                    <th onclick="sortTable(7)">Marktkapitalisierung</th>
                                 </tr>
                             </thead>
                             <tbody id="memecoins-list">
@@ -129,72 +105,116 @@
         <div class="right-gap"></div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Suchfunktion für die Coins -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const coinsPerPage = 25; // Anzahl der Coins pro Seite
-            let currentPage = 1;
-            let coinsData = [];
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchBar = document.getElementById("search-bar");
 
-            // Coins aus coins.json laden
-            async function loadCoins() {
-                try {
-                    const response = await fetch('coins.json');
-                    if (!response.ok) throw new Error('Fehler beim Laden der Coins-Daten');
-                    const data = await response.json();
-                    coinsData = data.sort((a, b) => b.market_cap - a.market_cap); // Nach Marktkapitalisierung absteigend sortieren
-                    displayCoins();
-                    updatePagination();
-                } catch (error) {
-                    console.error('Fehler:', error);
-                    alert('Die Coins-Daten konnten nicht geladen werden.');
+            searchBar.addEventListener("keyup", async function(event) {
+                const query = searchBar.value.trim().toLowerCase();
+                if (query.length > 2) {
+                    const searchResults = await searchCoins(query);
+                    displaySearchResults(searchResults);
+                } else {
+                    clearSearchResults();
+                }
+            });
+
+            async function searchCoins(query) {
+                const response = await fetch("https://api.coingecko.com/api/v3/coins/list");
+                const coins = await response.json();
+                return coins.filter(coin => coin.name.toLowerCase().includes(query) || coin.symbol.toLowerCase().includes(query));
+            }
+
+            function displaySearchResults(results) {
+                clearSearchResults();
+                const resultsContainer = document.createElement("div");
+                resultsContainer.id = "search-results";
+                resultsContainer.style.position = "absolute";
+                resultsContainer.style.backgroundColor = "#ffffff";
+                resultsContainer.style.color = "#000";
+                resultsContainer.style.border = "1px solid #ccc";
+                resultsContainer.style.width = "200px";
+                resultsContainer.style.zIndex = "1000";
+                resultsContainer.style.maxHeight = "200px";
+                resultsContainer.style.overflowY = "auto";
+
+                results.forEach(coin => {
+                    const resultItem = document.createElement("div");
+                    resultItem.textContent = `${coin.name} (${coin.symbol.toUpperCase()})`;
+                    resultItem.style.padding = "5px";
+                    resultItem.style.cursor = "pointer";
+
+                    resultItem.addEventListener("click", function() {
+                        window.location.href = `coin-detail.html?coinId=${coin.id}`;
+                    });
+
+                    resultsContainer.appendChild(resultItem);
+                });
+
+                searchBar.parentElement.appendChild(resultsContainer);
+            }
+
+            function clearSearchResults() {
+                const existingResults = document.getElementById("search-results");
+                if (existingResults) {
+                    existingResults.remove();
                 }
             }
 
-            // Coins auf der aktuellen Seite anzeigen
-            function displayCoins() {
-                const start = (currentPage - 1) * coinsPerPage;
-                const end = start + coinsPerPage;
-                const currentCoins = coinsData.slice(start, end);
-
-                const tableBody = document.getElementById('memecoins-list');
-                tableBody.innerHTML = '';
-
-                currentCoins.forEach((coin, index) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${start + index + 1}</td>
-                        <td>${coin.name} (${coin.symbol.toUpperCase()})</td>
-                        <td>$${coin.current_price.toFixed(4)}</td>
-                        <td>${coin.price_change_percentage_24h?.toFixed(2) ?? 'N/A'}%</td>
-                        <td>$${coin.market_cap.toLocaleString()}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            }
-
-            // Paginierung aktualisieren
-            function updatePagination() {
-                const totalPages = Math.ceil(coinsData.length / coinsPerPage);
-                const paginationElement = document.getElementById('pagination');
-                paginationElement.innerHTML = `
-                    <button onclick="changePage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>Vorherige Seite</button>
-                    <span>Seite ${currentPage} von ${totalPages}</span>
-                    <button onclick="changePage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>Nächste Seite</button>
-                `;
-            }
-
-            // Seite wechseln
-            function changePage(newPage) {
-                const totalPages = Math.ceil(coinsData.length / coinsPerPage);
-                if (newPage < 1 || newPage > totalPages) return;
-                currentPage = newPage;
-                displayCoins();
-            }
-
-            // Beim Laden der Seite die Coins-Daten abrufen
-            loadCoins();
+            document.addEventListener("click", function(event) {
+                if (!searchBar.contains(event.target)) {
+                    clearSearchResults();
+                }
+            });
         });
+
+        let sortDirection = {}; 
+        let originalRows = []; 
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const tableBody = document.getElementById("memecoins-list");
+            originalRows = Array.from(tableBody.rows);
+        });
+
+        function sortTable(columnIndex) {
+            const tableBody = document.getElementById("memecoins-list");
+            const rows = Array.from(tableBody.rows);
+
+            if (!sortDirection[columnIndex]) {
+                sortDirection[columnIndex] = "asc";
+            } else if (sortDirection[columnIndex] === "asc") {
+                sortDirection[columnIndex] = "desc";
+            } else {
+                resetTable();
+                sortDirection[columnIndex] = null;
+                return;
+            }
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].innerText.trim();
+                const cellB = rowB.cells[columnIndex].innerText.trim();
+                const a = isNaN(cellA) ? cellA : parseFloat(cellA.replace(/[^0-9.-]+/g, ""));
+                const b = isNaN(cellB) ? cellB : parseFloat(cellB.replace(/[^0-9.-]+/g, ""));
+
+                if (sortDirection[columnIndex] === "asc") {
+                    return a > b ? 1 : -1;
+                } else {
+                    return a < b ? 1 : -1;
+                }
+            });
+
+            tableBody.innerHTML = "";
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+
+        function resetTable() {
+            const tableBody = document.getElementById("memecoins-list");
+            tableBody.innerHTML = "";
+            originalRows.forEach(row => tableBody.appendChild(row));
+        }
     </script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/hotlist.js"></script>
 </body>
 </html>
